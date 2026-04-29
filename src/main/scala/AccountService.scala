@@ -10,9 +10,9 @@ object AccountService {
 
     KafkaProducer.resource(settings).use { producer =>
       val key = event match {
-        case e: AccountEvent.AccountCreated => e.id
-        case e: AccountEvent.MoneyDebited => e.id
-        case e: AccountEvent.MoneyCredited => e.id
+        case e: AccountEvent.AccountCreatedEvent => e.id
+        case e: AccountEvent.MoneyDebitedEvent => e.id
+        case e: AccountEvent.MoneyCreditedEvent => e.id
       }
       val record = ProducerRecord(topic, key, event.asJson.noSpaces)
       producer.produce(ProducerRecords.one(record))
